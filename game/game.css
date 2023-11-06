@@ -1,4 +1,5 @@
 .container{
+    display: none;
     max-width: 950vw;
     min-width: 80vw;
 }
@@ -25,6 +26,7 @@
 }
 .bt{
     margin-top: 15px;
+    margin-right: 5vw;
 }
 
 .modal{
@@ -58,13 +60,53 @@
 }
 
 .score{
+    letter-spacing: 5px;
     position: absolute;
-    top: 2%;
+    top: 1.5%;
     right: 5%;
-    font-size: 4rem;
+    font-size: 4.5rem;
     color: #56a5eb;
     border: 1px solid #56a5eb;
-    padding: 25px;
+    padding: 10px;
     border-radius: 50%;
 }
 
+.questionCount{
+    color: #56a5eb;
+    position: absolute;
+    left: 5%;
+    top: 5%;
+}
+
+.loader {
+    position: absolute;
+    border: 14px solid #807e7e; /* Light grey */
+    border-top: 14px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @media (max-width:500px) {
+    .score{
+        top: 2%;
+        right: 2%;
+        font-size: 3rem;
+        padding: 10px;
+    }
+
+    .questionCount,.questionNo{
+        font-size: 25px;
+    }
+
+    #question{
+        font-size: large;
+    }
+
+  }

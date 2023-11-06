@@ -8,89 +8,32 @@ const hint =document.getElementById('hint');
 const container=document.querySelector('.container');
 const choices=document.querySelectorAll('.choice-container');
 const score=document.querySelector('.score');
-const questions=[
-    {
-        question:"Who is the father of Computer",
-        choice1:"Quaid-e-Azam",
-        choice2:"Alama Iqbal",
-        choice3:"Jusitin Beiber",
-        choice4:"Charles Babbage",
-        answer:"D",
-        hint:"IDK man GOOGLE it😁"
-    },
-    {
-        question:"Who is the G.O.A.T of Football",
-        choice1:"Lionel Messi",
-        choice2:"Cristiano Ronaldo",
-        choice3:"Atif Aslam",
-        choice4:"Bakri",
-        answer:"A",
-        hint:"Me nhi btaounga 😎"
-    },
-    {
-        question:"What is the best OS?",
-        choice1:"MAC",
-        choice2:"Windows",
-        choice3:"Linux",
-        choice4:"4th knsa h bhai",
-        answer:"B",
-        hint:"Bhai kuch ni ata tumhe 🤣"
-    },
-    {
-        question:"Why are you GAY..!",
-        choice1:"yhi",
-        choice2:"tw",
-        choice3:"qayamat",
-        choice4:"hai",
-        answer:"A",
-        hint:"Mjy ata tw me idr hota kya 😒"
-    }
-];
+const questionNo =document.querySelector('.questionNo');
+const loader =document.querySelector('.loader');
+let answer;
+
 let count=0;
 
-console.log(questions[count].choice1);
 
 next.addEventListener("click",()=>{
     count++;
-    showQuestions();
+    fetchQuestions();
 })
-
-hint.addEventListener("click",()=>{
-    createModal();
-    setTimeout(removeModal,2000);
-})
-
-function showQuestions(){
-    choices.forEach((choice)=>{
-        choice.classList.remove('correct','wrong');
-    })
-    if(count<=3){
-question.innerHTML=questions[count].question;
-choice1.innerHTML=questions[count].choice1;
-choice2.innerHTML=questions[count].choice2;
-choice3.innerHTML=questions[count].choice3;
-choice4.innerHTML=questions[count].choice4;
-    }
-    else{
-        alert("game ended")
-        window.location.href="/index.html";
-    }
-}
 
 
 choices.forEach((choice) => {
     choice.addEventListener("click", () => {
-        const selectedAnswer = choice.querySelector('span').getAttribute('data-choice');
-        if (selectedAnswer === questions[count].answer) {
+        const selectedAnswer = choice.querySelector('span').innerHTML;
+        if (selectedAnswer ===answer) {
             choice.classList.add('correct');
             count++;
             score.innerHTML=parseInt(score.innerHTML)+10;
-            setTimeout(showQuestions,1000)
+            setTimeout(fetchQuestions,600)
             
         } else {
             choice.classList.add('wrong');
             count++;
-            setTimeout(showQuestions,1000)
+            setTimeout(fetchQuestions,600)
             
         }
     });
@@ -98,24 +41,95 @@ choices.forEach((choice) => {
 
 
 
-function createModal(){
-    const modal=document.createElement('div');
-    const hint=document.createElement('p');
-    hint.classList.add('hint');
-    hint.innerHTML=questions[count].hint;
-    modal.append(hint);
-    modal.classList.add('modal');
-    container.style.opacity='0.5';
-    document.body.appendChild(modal);
-
-}
-function removeModal(){
-    const modal =document.querySelector('.modal');
-    if(modal)
-    modal.remove();
-    container.style.opacity='1';
-}
 
 window.addEventListener("DOMContentLoaded",()=>{
-    showQuestions();
+    fetchQuestions();
 })
+
+
+//fetching question
+function fetchQuestions(){
+    //removing previous answer feedback
+    choices.forEach((choice)=>{
+                 choice.classList.remove('correct','wrong');
+             });
+if(count>=10){
+    window.location.href = "./end/end.html"
+}
+fetch('https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple')
+    .then(resp => resp.json())
+    .then((loadedQuestions) => {
+        question.innerHTML = loadedQuestions.results[count].question;
+        const correctAns = Math.floor(Math.random() * 4) + 1;
+        console.log(correctAns);
+
+        // Set the question and answer choices directly to HTML elements
+        question.innerHTML = loadedQuestions.results[count].question;
+        if (correctAns === 1) {
+            answer=loadedQuestions.results[count].correct_answer;
+            choice1.innerHTML = answer;
+            choice2.innerHTML = loadedQuestions.results[count].incorrect_answers[0];
+            choice3.innerHTML = loadedQuestions.results[count].incorrect_answers[1];
+            choice4.innerHTML = loadedQuestions.results[count].incorrect_answers[2];
+        } else if (correctAns === 2) {
+            answer=loadedQuestions.results[count].correct_answer;
+            choice1.innerHTML = loadedQuestions.results[count].incorrect_answers[0];
+            choice2.innerHTML = answer;
+            choice3.innerHTML = loadedQuestions.results[count].incorrect_answers[1];
+            choice4.innerHTML = loadedQuestions.results[count].incorrect_answers[2];
+        } else if (correctAns === 3) {
+            answer=loadedQuestions.results[count].correct_answer;
+            choice1.innerHTML = loadedQuestions.results[count].incorrect_answers[0];
+            choice2.innerHTML = loadedQuestions.results[count].incorrect_answers[1];
+            choice3.innerHTML = answer;
+            choice4.innerHTML = loadedQuestions.results[count].incorrect_answers[2];
+        } else {
+            choice1.innerHTML = loadedQuestions.results[count].incorrect_answers[0];
+            choice2.innerHTML = loadedQuestions.results[count].incorrect_answers[1];
+            choice3.innerHTML = loadedQuestions.results[count].incorrect_answers[2];
+            choice4.innerHTML = answer;
+        }
+
+        //updating question Number
+        questionNo.innerHTML = (count < 9) ? '0' + (count + 1) : count + 1;
+        loader.style.display='none';
+        container.style.display='block';
+    });
+}
+
+
+
+// function showQuestions(){
+    //     
+    //     if(count<=3){
+    // question.innerHTML=questions[count].question;
+    // choice1.innerHTML=questions[count].choice1;
+    // choice2.innerHTML=questions[count].choice2;
+    // choice3.innerHTML=questions[count].choice3;
+    // choice4.innerHTML=questions[count].choice4;
+    //     }
+    //     else{
+    //         alert("game ended")
+    //         window.location.href="/index.html";
+    //     }
+    // }
+
+
+    
+// function createModal(){
+//     const modal=document.createElement('div');
+//     const hint=document.createElement('p');
+//     hint.classList.add('hint');
+//     hint.innerHTML=questions[count].hint;
+//     modal.append(hint);
+//     modal.classList.add('modal');
+//     container.style.opacity='0.5';
+//     document.body.appendChild(modal);
+// }
+
+// function removeModal(){
+//     const modal =document.querySelector('.modal');
+//     if(modal)
+//     modal.remove();
+//     container.style.opacity='1';
+// }

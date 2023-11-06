@@ -1,0 +1,38 @@
+[
+    {
+        "question":"Who is the father of Computer",
+        "choice1":"Quaid-e-Azam",
+        "choice2":"Alama Iqbal",
+        "choice3":"Jusitin Beiber",
+        "choice4":"Charles Babbage",
+        "answer":"D",
+        "hint":"IDK man GOOGLE it😁"
+    },
+    {
+        "question":"Who is the G.O.A.T of Football",
+        "choice1":"Lionel Messi",
+        "choice2":"Cristiano Ronaldo",
+        "choice3":"Atif Aslam",
+        "choice4":"Bakri",
+        "answer":"A",
+        "hint":"Me nhi btaounga 😎"
+    },
+    {
+        "question":"What is the best OS?",
+        "choice1":"MAC",
+        "choice2":"Windows",
+        "choice3":"Linux",
+        "choice4":"4th knsa h bhai",
+        "answer":"B",
+        "hint":"Bhai kuch ni ata tumhe 🤣"
+    },
+    {
+        "question":"Why are you GAY..!",
+        "choice1":"yhi",
+        "choice2":"tw",
+        "choice3":"qayamat",
+        "choice4":"hai",
+        "answer":"A",
+        "hint":"Mjy ata tw me idr hota kya 😒"
+    }
+];
