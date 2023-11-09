@@ -11,37 +11,40 @@ const score=document.querySelector('.score');
 const questionNo =document.querySelector('.questionNo');
 const loader =document.querySelector('.loader');
 let answer;
+//constants for API CALL
+const MAX_QUESTIONS=10;
+const DIFFICULTY='easy';
 
+let loadedQuestions={};
 let count=0;
 
 
 next.addEventListener("click",()=>{
     count++;
-    fetchQuestions();
+    showQuestions();
 })
 
-
+//adding for each choice-container
 choices.forEach((choice) => {
+    //click event listener on choice
     choice.addEventListener("click", () => {
         const selectedAnswer = choice.querySelector('span').innerHTML;
         if (selectedAnswer ===answer) {
             choice.classList.add('correct');
             count++;
             score.innerHTML=parseInt(score.innerHTML)+10;
-            setTimeout(fetchQuestions,600)
+            setTimeout(showQuestions,250)
             
         } else {
             choice.classList.add('wrong');
             count++;
-            setTimeout(fetchQuestions,600)
-            
+            setTimeout(showQuestions,250)
         }
     });
 });
 
 
-
-
+//displaying on page load
 window.addEventListener("DOMContentLoaded",()=>{
     fetchQuestions();
 })
@@ -49,73 +52,62 @@ window.addEventListener("DOMContentLoaded",()=>{
 
 //fetching question
 function fetchQuestions(){
-    //removing previous answer feedback
-    choices.forEach((choice)=>{
-                 choice.classList.remove('correct','wrong');
-             });
-if(count>=10){
-    window.location.href = "./end/end.html"
-}
-fetch('https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple')
-    .then(resp => resp.json())
-    .then((loadedQuestions) => {
-        question.innerHTML = loadedQuestions.results[count].question;
-        const correctAns = Math.floor(Math.random() * 4) + 1;
-        console.log(correctAns);
 
-        // Set the question and answer choices directly to HTML elements
+fetch(`https://opentdb.com/api.php?amount=${MAX_QUESTIONS}&category=9&difficulty=${DIFFICULTY}&type=multiple`)
+    .then(resp => resp.json())
+    .then((loadedQ) => {
+        loadedQuestions=loadedQ;
         question.innerHTML = loadedQuestions.results[count].question;
+        showQuestions(loadedQuestions);
+    });
+}
+function showQuestions(loadedQuestionss=loadedQuestions){
+
+    if(count>=MAX_QUESTIONS){
+        window.location.href = "./end/end.html"
+    }
+
+    console.log(loadedQuestionss)
+    
+    const correctAns = Math.floor(Math.random() * 4) + 1;
+    question.innerHTML = loadedQuestionss.results[count].question;
         if (correctAns === 1) {
-            answer=loadedQuestions.results[count].correct_answer;
+            answer=loadedQuestionss.results[count].correct_answer;
             choice1.innerHTML = answer;
-            choice2.innerHTML = loadedQuestions.results[count].incorrect_answers[0];
-            choice3.innerHTML = loadedQuestions.results[count].incorrect_answers[1];
-            choice4.innerHTML = loadedQuestions.results[count].incorrect_answers[2];
+            choice2.innerHTML = loadedQuestionss.results[count].incorrect_answers[0];
+            choice3.innerHTML = loadedQuestionss.results[count].incorrect_answers[1];
+            choice4.innerHTML = loadedQuestionss.results[count].incorrect_answers[2];
         } else if (correctAns === 2) {
-            answer=loadedQuestions.results[count].correct_answer;
-            choice1.innerHTML = loadedQuestions.results[count].incorrect_answers[0];
+            answer=loadedQuestionss.results[count].correct_answer;
+            choice1.innerHTML = loadedQuestionss.results[count].incorrect_answers[0];
             choice2.innerHTML = answer;
-            choice3.innerHTML = loadedQuestions.results[count].incorrect_answers[1];
-            choice4.innerHTML = loadedQuestions.results[count].incorrect_answers[2];
+            choice3.innerHTML = loadedQuestionss.results[count].incorrect_answers[1];
+            choice4.innerHTML = loadedQuestionss.results[count].incorrect_answers[2];
         } else if (correctAns === 3) {
             answer=loadedQuestions.results[count].correct_answer;
-            choice1.innerHTML = loadedQuestions.results[count].incorrect_answers[0];
-            choice2.innerHTML = loadedQuestions.results[count].incorrect_answers[1];
+            choice1.innerHTML = loadedQuestionss.results[count].incorrect_answers[0];
+            choice2.innerHTML = loadedQuestionss.results[count].incorrect_answers[1];
             choice3.innerHTML = answer;
-            choice4.innerHTML = loadedQuestions.results[count].incorrect_answers[2];
+            choice4.innerHTML = loadedQuestionss.results[count].incorrect_answers[2];
         } else {
-            choice1.innerHTML = loadedQuestions.results[count].incorrect_answers[0];
-            choice2.innerHTML = loadedQuestions.results[count].incorrect_answers[1];
-            choice3.innerHTML = loadedQuestions.results[count].incorrect_answers[2];
+            choice1.innerHTML = loadedQuestionss.results[count].incorrect_answers[0];
+            choice2.innerHTML = loadedQuestionss.results[count].incorrect_answers[1];
+            choice3.innerHTML = loadedQuestionss.results[count].incorrect_answers[2];
             choice4.innerHTML = answer;
         }
+            //removing previous answer feedback
+    choices.forEach((choice)=>{
+        choice.classList.remove('correct','wrong');
+    });
 
         //updating question Number
         questionNo.innerHTML = (count < 9) ? '0' + (count + 1) : count + 1;
         loader.style.display='none';
         container.style.display='block';
-    });
 }
 
+/*Functionalities yet to be implemented*/
 
-
-// function showQuestions(){
-    //     
-    //     if(count<=3){
-    // question.innerHTML=questions[count].question;
-    // choice1.innerHTML=questions[count].choice1;
-    // choice2.innerHTML=questions[count].choice2;
-    // choice3.innerHTML=questions[count].choice3;
-    // choice4.innerHTML=questions[count].choice4;
-    //     }
-    //     else{
-    //         alert("game ended")
-    //         window.location.href="/index.html";
-    //     }
-    // }
-
-
-    
 // function createModal(){
 //     const modal=document.createElement('div');
 //     const hint=document.createElement('p');
