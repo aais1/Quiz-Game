@@ -96,14 +96,18 @@ function showQuestions(loadedQuestionss=loadedQuestions){
             choice4.innerHTML = answer;
         }
             //removing previous answer feedback
-    choices.forEach((choice)=>{
-        choice.classList.remove('correct','wrong');
-    });
+        removeFeedback();
 
         //updating question Number
         questionNo.innerHTML = (count < 9) ? '0' + (count + 1) : count + 1;
         loader.style.display='none';
         container.style.display='block';
+}
+
+function removeFeedback(){
+    choices.forEach((choice)=>{
+        choice.classList.remove('correct','wrong');
+    });
 }
 
 /*Functionalities yet to be implemented*/
