@@ -29,6 +29,8 @@
     margin-right: 5vw;
 }
 
+
+
 /* .modal{
     position: absolute;
     top: 50%;
@@ -80,11 +82,11 @@
 
 .loader {
     position: absolute;
-    border: 14px solid #807e7e; /* Light grey */
-    border-top: 14px solid #3498db; /* Blue */
+    border: 10px solid #807e7e; /* Light grey */
+    border-top: 10px solid #3498db; /* Blue */
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    width:80px;
+    height: 80px;
     animation: spin 2s linear infinite;
   }
   
