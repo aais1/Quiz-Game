@@ -149,3 +149,53 @@
     }
 
   }
+
+  /*Style from style.css*/
+
+  *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+ 
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: aliceblue;
+}
+
+#quiz{
+    font-size: 3rem;
+    color:#56a5eb;;
+    margin-bottom: 25px;
+}
+
+.container{
+    text-align: center;
+}
+
+.bt{
+    text-align: center;
+    font-weight: 700;
+    min-width: 150px;
+    height: 40px;
+    color: #56a5eb;;
+    border: 2px solid #56a5eb;
+    border-radius: 5px;
+    transition: 150ms;
+    margin-bottom: 15px;
+}
+.bt:hover{
+    cursor: pointer;
+    background-color: #56a5eb;;
+    cursor: pointer;
+    transform: translateY(-0.2rem);
+    color: white;
+}
+/* .bt[disabled]:hover{
+    cursor: not-allowed;
+} */
+
+
