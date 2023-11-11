@@ -5,7 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Game</title>
     <script src="end.js" defer></script>
-    <link rel="stylesheet" href="end.css">
+    <style>
+        *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        }
+    
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: aliceblue;
+        }   
+
+        .bt{
+    text-align: center;
+    font-weight: 700;
+    min-width: 150px;
+    height: 40px;
+    color: #56a5eb;;
+    border: 2px solid #56a5eb;
+    border-radius: 5px;
+    transition: 150ms;
+    margin-bottom: 15px;
+    }
+    .bt:hover{
+    cursor: pointer;
+    background-color: #56a5eb;;
+    cursor: pointer;
+    transform: translateY(-0.2rem);
+    color: white;
+    }
+    </style>
 </head>
 <body>
     <a href="../../index.html"><button class="bt">Play Again</button></a>
